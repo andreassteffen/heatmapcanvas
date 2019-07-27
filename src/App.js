@@ -1,26 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import DataTable from 'react-data-table-component';
+import data from './exampleData.js';
+import HeatMap from './components/HeatMap';
+
+const columns = [
+    {
+        name: 'id',
+        selector: 'id',
+        sortable: true,
+    },
+    {
+        name: 'smiles',
+        selector: 'smiles',
+        sortable: false,
+    },
+    {
+        name: 'htsassays',
+        selector: 'heatmap',
+        sortable: false,
+        cell: d => <HeatMap key={d.id} data={d.heatmap}/>
+    }
+];
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <DataTable
+                keyField={'uuid'}
+                title="selected compounds"
+                columns={columns}
+                data={data}
+                defaultSortField="id"
+                defaultSortDirection="desc"
+            />
+        </div>
+    );
 }
 
 export default App;
